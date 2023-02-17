@@ -1,0 +1,35 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using MvcSegundaPracticaNazarRomanyuk.Models;
+using MvcSegundaPracticaNazarRomanyuk.Repositories;
+
+namespace MvcSegundaPracticaNazarRomanyuk.Controllers
+{
+    public class ComicsController : Controller
+    {
+        private IRepositoryComics repo;
+
+        public ComicsController(IRepositoryComics repo)
+        {
+            this.repo = repo;
+        }
+        public IActionResult Index()
+        {
+            List<Comic> comics = this.repo.GetComics();
+            return View(comics);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+
+        public IActionResult Create(Comic comic)
+        {
+            this.repo.InsertComic(comic.IdComic, comic.Nombre, comic.Imagen, comic.Descripcion);
+            return RedirectToAction("Index");
+        }
+    }
+}

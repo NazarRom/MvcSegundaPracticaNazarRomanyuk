@@ -1,0 +1,11 @@
+﻿@model List<Comic>
+<a asp-controller="Comics" asp-action="Create" class="btn btn-info">Nuevo Comic</a>
+@foreach(Comic comic in Model){
+    <div>
+        <h1>@comic.Nombre</h1>
+        <img src="@comic.Imagen" style="width:300px;height:400px" />
+        <h2>@comic.Descripcion</h2>
+        <h3>@comic.IdComic</h3>
+    </div>
+}
+
