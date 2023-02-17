@@ -4,9 +4,11 @@ using System.Data;
 
 #region PROCEDURE
 //create procedure SP_INSERT_COMIC_SQL
-//(@idcom int, @nombre nvarchar(50),@img nvarchar(600),@desc nvarchar(500))
+//(@nombre nvarchar(50),@img nvarchar(600),@desc nvarchar(500))
 //as
-//insert into COMICS values (@idcom, @nombre, @img, @desc)
+//DECLARE @id INT
+//SELECT @id = MAX(IDCOMIC)+1 FROM COMICS
+//insert into COMICS values (@id, @nombre, @img, @desc)
 //go
 #endregion
 namespace MvcSegundaPracticaNazarRomanyuk.Repositories
@@ -44,19 +46,12 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
                            };
             return consulta.ToList();
         }
-        //metodo para sacar el maxiomo id
-        private int GetMaxId()
-        {
-            var maximo = (from datos in this.TablaComic.AsEnumerable()
-                          select datos).Max(x => x.Field<int>("IDCOMIC")) + 1;
-            return maximo;
-        }
+       
         //metodo para insertar
-        public void InsertComic(int idcomic, string nombre, string imagen, string descripcion)
+        public void InsertComic(string nombre, string imagen, string descripcion)
         {
-            int max = GetMaxId();
-            SqlParameter idpam = new SqlParameter("@idcom", max);
-            this.com.Parameters.Add(idpam);
+         
+            
 
             SqlParameter idnombre = new SqlParameter("@nombre", nombre);
             this.com.Parameters.Add(idnombre);

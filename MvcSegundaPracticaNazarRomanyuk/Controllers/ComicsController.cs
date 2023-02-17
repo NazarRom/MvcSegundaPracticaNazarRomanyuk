@@ -28,7 +28,7 @@ namespace MvcSegundaPracticaNazarRomanyuk.Controllers
 
         public IActionResult Create(Comic comic)
         {
-            this.repo.InsertComic(comic.IdComic, comic.Nombre, comic.Imagen, comic.Descripcion);
+            this.repo.InsertComic(comic.Nombre, comic.Imagen, comic.Descripcion);
             return RedirectToAction("Index");
         }
     }

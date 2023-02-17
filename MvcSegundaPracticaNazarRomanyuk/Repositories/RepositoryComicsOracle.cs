@@ -3,15 +3,14 @@ using Oracle.ManagedDataAccess.Client;
 using System.Data;
 #region PROCEDURE
 //create or replace procedure SP_INSERT_COMIC_ORACLE
-//(p_idcom comics.idcomic%type,
-//p_nombre comics.nombre%type,
+//(p_nombre comics.nombre%type,
 //p_img comics.imagen%type,
 //p_desc comics.descripcion%type)
 //as
 //begin
-//  insert into COMICS values(p_idcom, p_nombre, p_img, p_desc);
+// insert into COMICS values((select max(idcomic) +1 from comics), p_nombre, p_img, p_desc);
 //commit;
-//end;
+//end; 
 #endregion
 namespace MvcSegundaPracticaNazarRomanyuk.Repositories
 {
@@ -47,22 +46,10 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
                            };
             return consulta.ToList();
         }
-        //metodo para sacar el maxiomo id
-        private int GetMaxId()
-        {
-            var maximo = (from datos in this.TablaComic.AsEnumerable()
-                          select datos).Max(x => x.Field<int>("IDCOMIC")) + 1;
-            return maximo;
-        }
+    
         //metodo para insertar
-        public void InsertComic(int idcomic, string nombre, string imagen, string descripcion)
+        public void InsertComic(string nombre, string imagen, string descripcion)
         {
-            int max = GetMaxId();
-            OracleParameter idpam = new OracleParameter(":idcom", max);
-            this.com.Parameters.Add(idpam);
-
-            OracleParameter idnombre = new OracleParameter(":nombre", nombre);
-            this.com.Parameters.Add(idnombre);
 
             OracleParameter idimagen = new OracleParameter(":img", imagen);
             this.com.Parameters.Add(idimagen);

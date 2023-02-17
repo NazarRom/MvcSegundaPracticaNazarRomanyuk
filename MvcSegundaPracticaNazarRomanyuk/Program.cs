@@ -3,7 +3,7 @@ using MvcSegundaPracticaNazarRomanyuk.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<IRepositoryComics, RepositoryComicsOracle>();
+builder.Services.AddTransient<IRepositoryComics, RepositoryComicsSQL>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
