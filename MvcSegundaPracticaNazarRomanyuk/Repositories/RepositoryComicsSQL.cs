@@ -17,6 +17,7 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
         private SqlDataAdapter adapter;
         private SqlConnection cn;
         private SqlCommand com;
+        //constructor de la clase en el que inicualizo los objetos, declaro la conexion y una consulta para el linq
         public RepositoryComicsSQL()
         {
             string connectionString =
@@ -30,6 +31,7 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
             this.com = new SqlCommand();
             this.com.Connection = this.cn;
         }
+        //metodo que devuelve una lista del modelo comic
         public List<Comic> GetComics()
         {
             var consulta = from datos in this.TablaComic.AsEnumerable()
@@ -42,14 +44,14 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
                            };
             return consulta.ToList();
         }
-
+        //metodo para sacar el maxiomo id
         private int GetMaxId()
         {
             var maximo = (from datos in this.TablaComic.AsEnumerable()
                           select datos).Max(x => x.Field<int>("IDCOMIC")) + 1;
             return maximo;
         }
-
+        //metodo para insertar
         public void InsertComic(int idcomic, string nombre, string imagen, string descripcion)
         {
             int max = GetMaxId();

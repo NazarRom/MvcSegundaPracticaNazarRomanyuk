@@ -21,7 +21,7 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
         private OracleCommand com;
         private OracleDataAdapter adapter;
         private DataTable TablaComic;
-
+        //constructor de la clase en el que inicualizo los objetos, declaro la conexion y una consulta para el linq
         public RepositoryComicsOracle()
         {
             string connectionString = @"Data Source=LOCALHOST:1521/XE;Persist Security Info=false;User ID=SYSTEM;Password=oracle";
@@ -34,6 +34,7 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
             this.TablaComic = new DataTable();
             this.adapter.Fill(this.TablaComic);
         }
+        //metodo que devuelve una lista del modelo comic
         public List<Comic> GetComics()
         {
             var consulta = from datos in this.TablaComic.AsEnumerable()
@@ -46,14 +47,14 @@ namespace MvcSegundaPracticaNazarRomanyuk.Repositories
                            };
             return consulta.ToList();
         }
-
+        //metodo para sacar el maxiomo id
         private int GetMaxId()
         {
             var maximo = (from datos in this.TablaComic.AsEnumerable()
                           select datos).Max(x => x.Field<int>("IDCOMIC")) + 1;
             return maximo;
         }
-
+        //metodo para insertar
         public void InsertComic(int idcomic, string nombre, string imagen, string descripcion)
         {
             int max = GetMaxId();
